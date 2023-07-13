@@ -5,13 +5,13 @@ const {UserModel} = require("../model/user.model")
 const userRouter = express.Router()
 
 userRouter.post("/signup", async (req, res) => {
-    const {  name,email, pass } = req.body;
+    const {  email, pass , confirmPassword} = req.body;
     try {
       bcrypt.hash(pass, 5, async (err, secure_pass) => {
         if (err) {
           console.log(err);
         } else {
-          const user = new UserModel({ email, pass: secure_pass, name });
+          const user = new UserModel({ email, pass: secure_pass, confirmPassword });
           await user.save();
           res.send("Registered");
         }
